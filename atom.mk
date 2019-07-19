@@ -28,7 +28,7 @@ EIGEN_INSTALL_INCLUDE_DIR := $(TARGET_AUTOTOOLS_INSTALL_DESTDIR)$(TARGET_AUTOTOO
 define LOCAL_CMD_INSTALL
 	@mkdir -p $(dir $(EIGEN_INSTALL_PC_FILE))
 	@mkdir -p $(EIGEN_INSTALL_INCLUDE_DIR)
-	@( \
+	$(Q) ( \
 		WORLD=`sed -n -e "s!\#define EIGEN_WORLD_VERSION *\(.*\)!\1!p" $(EIGEN_MACRO_FILE)`; \
 		MAJOR=`sed -n -e "s!\#define EIGEN_MAJOR_VERSION *\(.*\)!\1!p" $(EIGEN_MACRO_FILE)`; \
 		MINOR=`sed -n -e "s!\#define EIGEN_MINOR_VERSION *\(.*\)!\1!p" $(EIGEN_MACRO_FILE)`; \
@@ -37,11 +37,13 @@ define LOCAL_CMD_INSTALL
 			-e "s!\$${INCLUDE_INSTALL_DIR}!$(TARGET_AUTOTOOLS_CONFIGURE_PREFIX)/include/eigen3!" \
 			$(EIGEN_PC_IN_FILE) > $(EIGEN_INSTALL_PC_FILE); \
 	)
-	@rsync -a --exclude='*.txt' \
-		$(PRIVATE_PATH)/Eigen $(EIGEN_INSTALL_INCLUDE_DIR)
-	@rsync -a --exclude='*.txt' --exclude='bench' --exclude='doc' --exclude='test' \
-		$(PRIVATE_PATH)/unsupported $(EIGEN_INSTALL_INCLUDE_DIR)
-	@cp -af $(PRIVATE_PATH)/QuaternionBaseAddons.hpp $(EIGEN_INSTALL_INCLUDE_DIR)
+	$(Q) rsync -a --exclude='*.txt' \
+		$(call path-from-top,$(PRIVATE_PATH)/Eigen) \
+		$(call path-from-top,$(EIGEN_INSTALL_INCLUDE_DIR))
+	$(Q) rsync -a --exclude='*.txt' --exclude='bench' --exclude='doc' --exclude='test' \
+		$(call path-from-top,$(PRIVATE_PATH)/unsupported) \
+		$(call path-from-top,$(EIGEN_INSTALL_INCLUDE_DIR))
+	$(Q) cp -af $(PRIVATE_PATH)/QuaternionBaseAddons.hpp $(EIGEN_INSTALL_INCLUDE_DIR)
 endef
 
 LOCAL_CLEAN_FILES += $(EIGEN_INSTALL_PC_FILE)
