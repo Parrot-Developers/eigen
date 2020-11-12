@@ -13,6 +13,7 @@ LOCAL_EXPORT_CFLAGS := \
 
 # Do not warn about uses of deprecated std::bind2nd
 LOCAL_EXPORT_CXXFLAGS := \
+	-Wno-deprecated-copy \
 	-Wno-deprecated-declarations
 
 EIGEN_MACRO_FILE := $(LOCAL_PATH)/Eigen/src/Core/util/Macros.h
