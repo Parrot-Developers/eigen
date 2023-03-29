@@ -8,7 +8,6 @@ LOCAL_DESCRIPTION := C++ template library for linear algebra
 LOCAL_CATEGORY_PATH := libs
 
 LOCAL_EXPORT_CFLAGS := \
-	-DEIGEN_MPL2_ONLY \
 	-DEIGEN_QUATERNIONBASE_PLUGIN=\"QuaternionBaseAddons.hpp\"
 
 # Do not warn about uses of deprecated std::bind2nd
