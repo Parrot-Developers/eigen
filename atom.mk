@@ -10,13 +10,13 @@ LOCAL_CATEGORY_PATH := libs
 LOCAL_EXPORT_CFLAGS := \
 	-DEIGEN_QUATERNIONBASE_PLUGIN=\"QuaternionBaseAddons.hpp\"
 
-ifneq ("$(call check-version,$(TARGET_CC_VERSION),9)","")
-	LOCAL_EXPORT_CXXFLAGS += -Wno-deprecated-copy
-endif
-
 # Do not warn about uses of deprecated std::bind2nd
 LOCAL_EXPORT_CXXFLAGS := \
 	-Wno-deprecated-declarations
+
+ifneq ("$(call check-version,$(TARGET_CC_VERSION),9)","")
+	LOCAL_EXPORT_CXXFLAGS += -Wno-deprecated-copy
+endif
 
 EIGEN_MACRO_FILE := $(LOCAL_PATH)/Eigen/src/Core/util/Macros.h
 EIGEN_PC_IN_FILE := $(LOCAL_PATH)/eigen3.pc.in
